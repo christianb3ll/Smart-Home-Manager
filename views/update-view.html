@@ -1,0 +1,261 @@
+<!doctype html>
+<html>
+
+<head>
+    <%- include('partials/head.html'); %>
+</head>
+
+<!-- header and nav bar -->
+<%- include('partials/header.html'); %>
+	    
+	
+
+    <% currentDevices.forEach(function(device){ %>
+
+    	<nav aria-label="breadcrumb">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item"><a href="/update-device">Device List</a></li>
+		    	<li class="breadcrumb-item active" aria-current="page"><%= device.name %></li>
+		  	</ol>
+		</nav>
+
+		<form id="update-device" method="POST" action="/update-device">
+			<input hidden name="id" value="<%= device.id %>">
+	    	<h2><%= device.name %> <small class="text-muted"><%= device.type %></small></h2>
+
+	    	<div class="form-group">
+		    	<label for="name">Device Name:</label>
+		        <input id="name" class="form-control" type="text" maxlength="50" name="name" value="<%= device.name %>" required/>
+			</div>
+
+	    	<!-- power / open status row -->
+	    	<div class="row">
+				<!-- power -->
+				<% if(device.power != null){ %>
+					<div class="col">
+						<h4>Power</h4>
+						<div class="form-group">
+							<!-- show on / off instead of boolean values -->
+							<% if(device.power == 1){ %>
+								
+								<div class="form-check form-check-inline" id="power">
+									<input class="form-check-input" type="radio" name="power" value="1" id="on" checked required>
+									<label class="form-check-label" for="on">On</label>
+								</div>
+								<div class="form-check form-check-inline">
+									<input class="form-check-input" type="radio" name="power" value="0" id="off">
+									<label class="form-check-label" for="off">Off</label>
+								</div>
+							<% } else {%>
+								
+								<div class="form-check form-check-inline" id="power">
+									<input class="form-check-input" type="radio" name="power" value="1" id="on" required>
+									<label class="form-check-label" for="on">On</label>
+								</div>
+								<div class="form-check form-check-inline">
+									<input class="form-check-input" type="radio" name="power" value="0" id="off" checked>
+									<label class="form-check-label" for="off">Off</label>
+								</div>
+							<% } %>
+						</div>
+
+
+					</div>
+				<% } %>
+				<% if(device.open != null){ %>
+					<div class="col">
+						<h4>Open / Closed</h4>
+						<div class="form-group">
+							<!-- show on / off instead of boolean values -->
+							<% if(device.open == 1){ %>
+								
+								<div class="form-check form-check-inline" id="open-close">
+									<input class="form-check-input" type="radio" name="open" value="1" id="open" checked required>
+									<label class="form-check-label" for="open">Open</label>
+								</div>
+								<div class="form-check form-check-inline">
+									<input class="form-check-input" type="radio" name="open" value="0" id="closed">
+									<label class="form-check-label" for="closed">Closed</label>
+								</div>
+							<% } else {%>
+								
+								<div class="form-check form-check-inline" id="open-close">
+									<input class="form-check-input" type="radio" name="open" value="1" id="open" required>
+									<label class="form-check-label" for="open">Open</label>
+								</div>
+								<div class="form-check form-check-inline">
+									<input class="form-check-input" type="radio" name="open" value="0" id="closed" checked>
+									<label class="form-check-label" for="closed">Closed</label>
+								</div>
+							<% } %>
+						</div>
+					</div>
+				<% } %>
+			</div><!-- row -->
+
+			<!-- temperature -->
+			<div class="row">
+				<% if(device.temperature != null){ %>
+					<div class="col">
+						<div class="form-group">
+							<label for="temperature">Temperature:</label>
+
+							<% if(device.type == 'Fridge'){ %>
+						        <input id="temperature-fridge" class="form-control" type="range" min="0" max="5" name="temperature" value="<%= device.temperature %>" onchange="showValue('temperature-fridge')"/>
+						        <div id="temperature-fridge-value"><%= device.temperature %></div>
+							<% } else if(device.type == 'Oven'){ %>
+						        <input id="temperature-oven" class="form-control" type="range" min="100" max="220" name="temperature" value="<%= device.temperature %>" onchange="showValue('temperature')"/>
+						        <div id="temperature-oven-value"><%= device.temperature %></div>
+							<% } else if(device.type == 'Thermostat'){ %>
+						        <input id="temperature-thermostat" class="form-control" type="range" min="10" max="30" name="temperature" value="<%= device.temperature %>" onchange="showValue('temperature-thermostat')"/>
+						        <div id="temperature-thermostat-value"><%= device.temperature %></div>
+						    <% } else if(device.type == 'Air Conditioner'){ %>
+						        <input id="temperature-aircon" class="form-control" type="range" min="10" max="30" name="temperature" value="<%= device.temperature %>" onchange="showValue('temperature-aircon')"/>
+						        <div id="temperature-aircon-value"><%= device.temperature %></div>
+						    <% } else if(device.type == 'Bath Tub'){ %>
+						        <input id="temperature-bath" class="form-control" type="range" min="20" max="40" name="temperature" value="<%= device.temperature %>" onchange="showValue('temperature-bath')"/>
+						        <div id="temperature-bath-value"><%= device.temperature %></div>
+					    	<% } %>
+					    </div>
+					</div>
+				<% } %>
+
+			</div><!-- row -->
+
+			<!-- time -->
+			<div class="row">
+				<% if(device.starttime != null){ %>
+					<div class="col">
+						<h4>Time</h4>
+
+
+						<div class="form-group">
+							<label for="start-time">Time:</label>
+							<input id="start-time" class="form-control" type="time"  name="starttime" value="<%= device.starttime %>">
+						</div>
+
+						
+					</div>
+				
+				<% } %>
+
+				<% if(device.endtime != null){ %>
+					<div class="col">
+						<h4>End Time</h4>
+
+						<div class="col">
+							<label for="end-time">Until:</label>
+							<input id="end-time" class="form-control" type="time"  name="endtime" value="<%= device.endtime %>">
+						</div>
+						
+					</div>
+				<% } %>
+
+			</div><!-- row -->
+
+			<!-- channel / volume -->
+			<div class="row">
+				<% if(device.channel != null){ %>
+					<div class="col">
+						<h4>Channel</h4>
+
+
+						<div class="form-group">
+						    <label for="channel">Channel:</label>
+						    <select class="form-control" id="channel" name="channel">
+						    	<option <% if(device.channel == 'BBC1') { %> selected <% } %>>BBC1</option>
+						    	<option <% if(device.channel == 'BBC2') { %> selected <% } %>>BBC2</option>
+						    	<option <% if(device.channel == 'ITV') { %> selected <% } %>>ITV</option>
+						    	<option <% if(device.channel == 'Channel 4') { %> selected <% } %>>Channel 4</option>
+						    	<option <% if(device.channel == 'Channel 5') { %> selected <% } %>>Channel 5</option>
+						  	</select>
+						</div>
+						
+					</div>
+				<% } %>
+
+				<% if(device.volume != null){ %>
+					<div class="col">
+						<h4>Volume</h4>
+
+						<div class="form-group">
+					        <input id="volume" class="form-control" type="range" min="0" max="100" name="volume" value="<%= device.volume %>" onchange="showValue('volume')"/>
+					        <div id="volume-value"><%= device.volume %></div>
+					    </div>
+						
+					</div>
+				<% } %>
+
+			</div><!-- row -->
+
+			<div class="row">
+				<!-- colour -->
+				<% if(device.colour != null){ %>
+					<div class="col">
+						<h4>Colour</h4>
+
+						<div class="form-group">
+					        <label for="colour">Colour:</label>
+			  				<input id="colour" class="form-control" type="color" id="colour" name="colour" value="<%= device.colour %>">
+			  			</div>
+						
+					</div>
+				<% } %>
+
+				<!-- humidity -->
+				<% if(device.humidity != null){ %>
+					<div class="col">
+						<h4>Humidity</h4>
+						<div class="form-group">
+			  				<label for="humidity">Humidity %:</label>
+					        <input id="humidity" class="form-control" type="range" min="30" max="50" name="humidity" value="<%= device.humidity %>" onchange="showValue('humidity')"/>
+			        		<div id="humidity-value"><%= device.humidity %></div>
+					    </div>
+						
+					</div>
+				<% } %>
+
+				<!-- pattern -->
+				<% if(device.pattern != null){ %>
+					<div class="col">
+						<h4>Pattern</h4>
+						
+						<div class="form-group">
+						    <select class="form-control" id="sprinkler" name="pattern">
+						    	<option <% if(device.pattern == 'Burst') { %> selected <% } %>>Burst</option>
+						    	<option <% if(device.pattern == 'Pulse') { %> selected <% } %>>Pulse</option>
+						    	<option <% if(device.pattern == 'Steady') { %> selected <% } %>>Steady</option>
+						    	<option <% if(device.pattern == 'Spiral') { %> selected <% } %>>Spiral</option>
+						  	</select>
+						</div>
+						
+					</div>
+				<% } %>
+
+				<!-- cycle -->
+				<% if(device.cycle != null){ %>
+					<div class="col">
+						<h4>Cycle</h4>
+
+						<div class="form-group">
+						    <select class="form-control" id="wash-cycle" name="cycle">
+						    	<option <% if(device.cycle == 'Cotton') { %> selected <% } %>>Cotton</option>
+						    	<option <% if(device.cycle == 'Wool') { %> selected <% } %>>Wool</option>
+						    	<option <% if(device.cycle == 'Synthetic') { %> selected <% } %>>Synthetics</option>
+						    	<option <% if(device.cycle == 'Cool') { %> selected <% } %>>Cool</option>
+						    	<option <% if(device.cycle == 'Eco') { %> selected <% } %>>Eco</option>
+						  	</select>
+						</div>
+						
+					</div>
+				<% } %>
+
+			</div><!-- row -->
+			<input type="submit" class="btn btn-primary" value="Update Device" />
+		</form>
+	<% }) %>
+
+<!-- footer -->
+<%- include('partials/footer.html'); %>
+
+</html>

@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+
+<head>
+    <%- include('partials/head.html'); %>
+</head>
+
+<!-- header and nav bar -->
+<%- include('partials/header.html'); %>
+
+
+
+	<p class="lead">View the status of your current devices</p>
+
+	<% if (currentDevices) { %>
+	    <table class="table table-hover">
+	    	<tr>
+		    	<th>Device Name</th>
+		    	<th>Device Type</th>
+		    	<th></th>
+		    </tr>
+		    <% currentDevices.forEach(function(device){ %>
+		    	<tr>
+		        	<td><%= device.name %></td>
+		        	<td><%= device.type %></td>
+		        	<td><a class="btn btn-secondary float-right" href="device-status/<%= device.id %>">Check Status</a></td>
+	    		</tr>
+	    	<% }) %>
+	    </table>
+	<% } %>
+
+
+<%- include('partials/footer.html'); %>
+
+
+
+</html>

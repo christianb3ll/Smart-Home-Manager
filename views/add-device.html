@@ -1,0 +1,201 @@
+<!doctype html>
+<html>
+
+<head>
+    <%- include('partials/head.html'); %>
+</head>
+
+
+<!-- header and nav bar -->
+<%- include('partials/header.html'); %>
+
+
+	<p class="lead">Use the form to configure a new device for your Smart Home</p>
+
+	<div class="row">
+		<div class="col-md-6">
+
+			<!-- add device form -->
+		    <form id="add-device" method="POST" action="/device-added">
+
+		    	<!-- device select -->
+		    	<div class="form-group">
+				    <label for="device-select">Device Select:</label>
+				    <select class="form-control" id="device-select" name="type">
+				    	<option value="none" selected disabled hidden>Select a Device</option>
+				    	<option>Fridge</option>
+				    	<option>Microwave</option>
+				    	<option>Kettle</option>
+				    	<option>Coffee Maker</option>
+				    	<option>Oven</option>
+				    	<option>Clock</option>
+				    	<option>TV</option>
+				    	<option>Roomba</option>
+				    	<option>Light</option>
+				    	<option>Thermostat</option>
+				    	<option>Speakers</option>
+				    	<option>Air Conditioner</option>
+				    	<option>Humidifier</option>
+				    	<option>Bath Tub</option>
+				    	<option>Washing Machine</option>
+				    	<option>Gate</option>
+				    	<option>Shutters</option>
+				    	<option>Garage Door</option>
+				    	<option>Security Camera</option>
+				    	<option>Motion Sensor</option>
+				  	</select>
+				</div>
+
+				<!-- other form fields are hidden until a device has been chosen -->
+				<div id="form-toggle" class="d-none">
+
+					<!-- device name -->
+			    	<div class="form-group d-none">
+				    	<label for="name">Device Name:</label>
+				        <input id="name" class="form-control" type="text" maxlength="50" name="name" required/>
+					</div>
+
+					<!-- device power -->
+					<div class="form-group d-none">
+				        <div class="form-check form-check-inline" id="power">
+							<input class="form-check-input" type="radio" name="power" value="1" id="on" selected required>
+							<label class="form-check-label" for="on">On</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" name="power" value="0" id="off">
+							<label class="form-check-label" for="off">Off</label>
+						</div>
+					</div>
+
+					<!-- device open or closed -->
+					<div class="form-group d-none">
+						<div class="form-check form-check-inline" id="open-close">
+							<input class="form-check-input" type="radio" name="open" value="1" id="open">
+							<label class="form-check-label" for="open">Open</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" name="open" value="0" id="closed">
+							<label class="form-check-label" for="closed">Closed</label>
+						</div>
+					</div>
+
+					<!-- fridge temperature -->
+					<div class="form-group d-none">
+						<label for="temperature">Fridge Temperature:</label>
+				        <input id="temperature-fridge" class="form-control" type="range" min="0" max="5" name="temperature" value="3" onchange="showValue('temperature-fridge')"/>
+				        <div id="temperature-fridge-value">3</div>
+				    </div>
+
+				    <!-- oven temperature -->
+				    <div class="form-group d-none">
+				        <label for="temperature">Oven Temperature:</label>
+				        <input id="temperature-oven" class="form-control" type="range" min="100" max="220" name="temperature" value="180" onchange="showValue('temperature-oven')"/>
+				        <div id="temperature-oven-value">180</div>
+				    </div>
+				    
+				    <!-- thermostat temperature -->
+				    <div class="form-group d-none">
+				        <label for="temperature">Thermostat Temperature:</label>
+				        <input id="temperature-thermostat" class="form-control" type="range" min="10" max="30" name="temperature" value="22" onchange="showValue('temperature-thermostat')"/>
+				        <div id="temperature-thermostat-value">22</div>
+				    </div>
+				    
+				    <!-- air conditioner temperature -->
+				    <div class="form-group d-none">    
+				        <label for="temperature">Air Conditioner Temperature:</label>
+				        <input id="temperature-aircon" class="form-control" type="range" min="10" max="30" name="temperature" value="22" onchange="showValue('temperature-aircon')"/>
+				        <div id="temperature-aircon-value">22</div>
+				    </div>
+				    
+				    <!-- bath temperature -->
+				    <div class="form-group d-none">    
+				        <label for="temperature">Bath Temperature:</label>
+				        <input id="temperature-bath" class="form-control" type="range" min="20" max="40" name="temperature" value="30" onchange="showValue('temperature-bath')"/>
+				        <div id="temperature-bath-value">30</div>
+				    </div>
+
+				    <!-- time settings -->
+					<div class="form-group d-none">
+				        <div class="form-row">
+				        	<div class="col">
+								<label for="start-time">Time:</label>
+								<input id="start-time" class="form-control" type="time"  name="starttime">
+							</div>
+							<div class="col">
+								<label for="end-time">Until:</label>
+								<input id="end-time" class="form-control" type="time"  name="endtime">
+							</div>
+						</div>
+					</div>
+
+					<!-- tv channel -->
+			        <div class="form-group d-none">
+					    <label for="channel">Channel:</label>
+					    <select class="form-control" id="channel" name="channel">
+					    	<option value="none" selected disabled hidden>Select Channel</option>
+					    	<option>BBC1</option>
+					    	<option>BBC2</option>
+					    	<option>ITV</option>
+					    	<option>Channel 4</option>
+					    	<option>Channel 5</option>
+					  	</select>
+					</div>
+
+					<!-- volume  -->
+					<div class="form-group d-none">
+						<label for="volume">Volume:</label>
+				        <input id="volume" class="form-control" type="range" min="0" max="100" name="volume" value="0" onchange="showValue('volume')"/>
+				        <div id="volume-value">0</div>
+				    </div>
+
+				    <!-- colour -->
+				    <div class="form-group d-none">
+				        <label for="colour">Colour:</label>
+		  				<input id="colour" class="form-control" type="color" id="colour" name="colour" value="#FF0000">
+		  			</div>
+
+		  			<!-- humidity -->
+		  			<div class="form-group d-none">
+		  				<label for="humidity">Humidity %:</label>
+				        <input id="humidity" class="form-control" type="range" min="30" max="50" name="humidity" value="30" onchange="showValue('humidity')"/>
+				        <div id="humidity-value">30</div>
+				    </div>
+
+				    <!-- sprinkler pattern -->
+			        <div class="form-group d-none">
+					    <label for="sprinkler">Sprinkler Pattern:</label>
+					    <select class="form-control" id="sprinkler" name="pattern">
+					    	<option value="none" selected disabled hidden>Select Pattern</option>
+					    	<option>Burst</option>
+					    	<option>Pulse</option>
+					    	<option>Steady</option>
+					    	<option>Spiral</option>
+					  	</select>
+					</div>
+
+					<!-- wash cycle -->
+					<div class="form-group d-none">
+					    <label for="wash-cycle">Wash Cycle:</label>
+					    <select class="form-control" id="wash-cycle" name="cycle">
+					    	<option value="none" selected disabled hidden>Select Wash Cycle</option>
+					    	<option>Cotton</option>
+					    	<option>Wool</option>
+					    	<option>Synthetics</option>
+					    	<option>Cool</option>
+					    	<option>Eco</option>
+					  	</select>
+					</div>
+
+					<!-- form submit -->
+			        <input type="submit" class="btn btn-primary" value="Add Device" />
+			    </div><!-- form-toggle -->
+		    </form>
+
+		</div><!--  col -->
+	</div><!--  row -->
+
+<!-- footer -->
+<%- include('partials/footer.html'); %>
+
+
+</html>

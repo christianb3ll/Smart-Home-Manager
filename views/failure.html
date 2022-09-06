@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+
+<head>
+    <%- include('partials/head.html'); %>
+</head>
+
+<!-- header and nav bar -->
+<%- include('partials/header.html'); %>
+
+
+
+	<% if (failure ) { %>
+		<div class="alert alert-danger" role="alert">
+		  <%= failure %>
+		</div>
+	<% } %>
+
+
+<!-- footer -->
+<%- include('partials/footer.html'); %>
+
+
+</html>

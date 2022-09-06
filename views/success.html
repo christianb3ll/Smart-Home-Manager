@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+
+<head>
+    <%- include('partials/head.html'); %>
+</head>
+
+<!-- header and nav bar -->
+<%- include('partials/header.html'); %>
+
+
+
+	<% if (success ) { %>
+		<div class="alert alert-success" role="alert">
+		  <%= success %>
+		</div>
+	<% } %>
+
+
+<!-- footer -->
+<%- include('partials/footer.html'); %>
+
+
+</html>

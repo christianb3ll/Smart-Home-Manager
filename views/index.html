@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+
+<head>
+    <%- include('partials/head.html'); %>
+</head>
+
+<!-- header and nav bar -->
+<%- include('partials/header.html'); %>
+
+
+	<div class="px-4 py-5 my-5 text-center">
+    	<h2 class="display-5 fw-bold">Welcome to your smart home control panel.</h2>
+    	<div class="col-lg-6 mx-auto">
+      		<p class="lead mb-4">Manage the status of your current devices or add some more.</p>
+      		<div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+        		<a class="btn btn-primary btn-lg px-4 gap-3 m-3" href="/add-device" role="button">Add Device</a>
+        		<a class="btn btn-outline-secondary btn-lg px-4 m-3 " href="/device-status" role="button">My Devices</a>
+      		</div>
+    	</div>
+  	</div>
+
+<!-- footer -->
+<%- include('partials/footer.html'); %>
+
+
+</html>

@@ -1,0 +1,140 @@
+<!doctype html>
+<html>
+
+<head>
+    <%- include('partials/head.html'); %>
+</head>
+
+<!-- header and nav bar -->
+<%- include('partials/header.html'); %>
+
+    <% currentDevices.forEach(function(device){ %>
+
+    	<nav aria-label="breadcrumb">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item"><a href="/device-status">Device List</a></li>
+		    	<li class="breadcrumb-item active" aria-current="page"><%= device.name %></li>
+		  	</ol>
+		</nav>
+
+    	<h2><%= device.name %> <small class="text-muted"><%= device.type %></small></h2>
+
+    	<!-- power / open status row -->
+    	<div class="row my-3">
+			<!-- power -->
+			<% if(device.power != null){ %>
+				<div class="col">
+					<h4>Power</h4>
+					<!-- show on / off instead of boolean values -->
+					<p>
+						<% if(device.power == 1){ %>
+							On
+						<% } else {%>
+							Off
+						<% } %>
+					</p>
+				</div>
+			<% } %>
+			<% if(device.open != null){ %>
+				<div class="col">
+					<h4>Open / Closed</h4>
+					<!-- show on / off instead of boolean values -->
+					<p>
+						<% if(device.open == 1){ %>
+							Open
+						<% } else {%>
+							Closed
+						<% } %>
+					</p>
+				</div>
+			<% } %>
+		</div><!-- row -->
+
+		<!-- temperature -->
+		<div class="row my-3">
+			<% if(device.temperature != null){ %>
+				<div class="col">
+					<h4>Temperature</h4>
+					<p><%= device.temperature %> °C</p>
+				</div>
+			<% } %>
+		</div><!-- row -->
+
+		<!-- time -->
+		<div class="row my-3">
+
+			<% if(device.starttime != null){ %>
+				<div class="col">
+					<h4>Time</h4>
+					<p><%= device.starttime %></p>
+				</div>
+			<% } %>
+
+			<% if(device.endtime != null){ %>
+				<div class="col">
+					<h4>End Time</h4>
+					<p><%= device.endtime %></p>
+				</div>
+			<% } %>
+		</div><!-- row -->
+
+		<!-- channel / volume -->
+		<div class="row my-3">
+
+			<% if(device.channel != null){ %>
+				<div class="col">
+					<h4>Channel</h4>
+					<p><%= device.channel %></p>
+				</div>
+			<% } %>
+
+			<% if(device.volume != null){ %>
+				<div class="col">
+					<h4>Volume</h4>
+					<p><%= device.volume %></p>
+				</div>
+			<% } %>
+
+		</div><!-- row -->
+
+		<div class="row my-3">
+
+			<!-- colour -->
+			<% if(device.colour != null){ %>
+				<div class="col">
+					<h4>Colour</h4>
+					<div class="p-3" style="background-color: <%= device.colour %>"></div>
+				</div>
+			<% } %>
+
+			<!-- humidity -->
+			<% if(device.humidity != null){ %>
+				<div class="col">
+					<h4>Humidity</h4>
+					<p><%= device.humidity %>%</p>
+				</div>
+			<% } %>
+
+			<!-- pattern -->
+			<% if(device.pattern != null){ %>
+				<div class="col">
+					<h4>Pattern</h4>
+					<p><%= device.pattern %></p>
+				</div>
+			<% } %>
+
+			<!-- cycle -->
+			<% if(device.cycle != null){ %>
+				<div class="col">
+					<h4>Cycle</h4>
+					<p><%= device.cycle %></p>
+				</div>
+			<% } %>
+
+		</div><!-- row -->
+	<% }) %>
+
+<!-- footer -->
+<%- include('partials/footer.html'); %>
+
+</html>
